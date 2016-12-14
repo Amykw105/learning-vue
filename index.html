@@ -8,12 +8,28 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style>
+      [v-cloak]{
+        display: none;
+        /** display none on the object until JS has rendered **/
+      }
+    </style>
   </head>
 
   <body>
     <div id="app">
-      <h1>{{message}}</h1>
-      <p>{{submessage}}</p>
+      <!-- output content in plain text -->
+      <h1 v-text="message"></h1>
+      <!-- output content and parse html -->
+      <p v-html="intro"></p>
+      <!-- output if variable == true -->
+      <p v-show="viewed">This has been viewed</p>
+      <!-- if/else statement based on variable == true -->
+      <p v-if="viewed">This has been viewed</p>
+      <p v-else>This has not been viewed</p>
+      <!-- used to target before JS has rendered e.g. Flash of unprocessed code -->
+      <h1 v-cloak>{{message}}</h1>
     </div>
   </body>
 
@@ -24,7 +40,10 @@
       el: '#app',
       data: {
         message: 'Hello Vue World',
-        submessage: 'Vue World'
+        submessage: 'Vue World',
+        intro: "Welcome - <small>Welcome</small>",
+        viewed: false,
+        viewed2: true
       }
     })
   </script>
