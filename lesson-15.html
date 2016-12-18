@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vue.js Tutorial | API Example</title>
+
+    <!-- Bulma CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.min.css" integrity="sha256-F7gqKszCwmz8vhiti+AICU8dLfIEpxzPVihhhGfbbKg=" crossorigin="anonymous" />
+  </head>
+  <!--
+  Named Slots
+  -->
+  <body>
+    <div id="app" style="padding-top: 30px;">
+      <div class="container">
+        <div class="row">
+
+          <modal>
+            <template slot="header">my heading</template>
+
+            <!-- Any content now wrapped in a named slot will appear in the default slot markup -->
+            <!-- and override the default slot content -->
+            my main content
+
+            <div slot="footer">
+              This is the footer
+            </div>
+          </modal>
+
+        </div> <!-- end of .row -->
+      </div> <!-- end of .container -->
+    </div> <!-- end of #app -->
+  </body>
+
+  <script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
+
+  <script>
+    Vue.component('modal', {
+      template: `
+      <div class="modal is-active">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">
+              <slot name="header"></slot>
+            </p>
+            <button class="delete"></button>
+          </header>
+          <section class="modal-card-body">
+            <slot>
+              Default slot content here
+            </slot>
+          </section>
+          <footer class="modal-card-foot">
+            <slot name="footer"></footer>
+          </footer>
+        </div>
+      </div>
+      `,
+
+      methods: {
+        // Notify the root onCouponApplied method (this will run the root onCouponApplied function)
+        onCouponApplied(){
+          this.$emit('applied')
+        }
+      }
+    })
+
+    new Vue({
+      el: '#app',
+
+      data:{
+        couponApplied: false
+      },
+      // This is the root onCouponApplied method
+      methods: {
+        onCouponApplied(){
+          this.couponApplied = true
+        }
+      }
+    })
+  </script>
+</html>
