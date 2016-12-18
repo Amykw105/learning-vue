@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vue.js Tutorial | API Example</title>
+
+    <!-- Bulma CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.min.css" integrity="sha256-F7gqKszCwmz8vhiti+AICU8dLfIEpxzPVihhhGfbbKg=" crossorigin="anonymous" />
+  </head>
+  <!--
+  Using vue components to output content into tabs.
+  This is in my opinion massively overcomplicating simple tabs.
+  -->
+  <body>
+    <div id="app" style="padding-top: 30px;">
+      <div class="container">
+        <div class="row">
+
+          <tabs>
+            <tab name="About Us" :selected="true">
+              <h1>Here is the content for the about us tab</h1>
+            </tab>
+            <tab name="About Our Culture">
+              <h1>Here is the content for the about culture tab</h1>
+            </tab>
+            <tab name="About Our Vision">
+              <h1>Here is the content for the about vision tab</h1>
+            </tab>
+          </tabs>
+
+        </div> <!-- end of .row -->
+      </div> <!-- end of .container -->
+    </div> <!-- end of #app -->
+  </body>
+
+  <script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
+
+  <script>
+  // Templates MUST have one root element
+  Vue.component('tabs', {
+    template: `
+    <div>
+    <div class="tabs">
+        <ul>
+          <li v-for="tab in tabs" :class="{'is-active': tab.isActive}">
+            <a :href="tab.href" @click="selectTab(tab)">{{tab.name}}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tabs-details">
+      <slot></slot>
+      </div>
+      </div>
+      `,
+
+      data(){
+        return { tabs:[]};
+      },
+
+    created(){
+      this.tabs = this.$children;
+    },
+
+    methods:{
+      selectTab(selectedTab){
+        this.tabs.forEach(tab =>{
+          tab.isActive = (tab.name == selectedTab.name);
+        })
+      }
+    }
+  });
+
+      Vue.component('tab',{
+        template: `
+          <div v-show="isActive"><slot></slot></div>
+        `,
+        props:{
+          name: {required: true},
+          selected: {default: false}
+        },
+        // All tabs are false (not showing) unless specified
+        data(){
+          return{
+            isActive: false
+          }
+        },
+        // Get the name and turn into an ID to use as a href
+        computed:{
+            href(){
+              return '#' + this.name.toLowerCase().replace(/ /g, '-');
+            }
+        },
+
+        mounted(){
+          this.isActive = this.selected;
+        }
+      });
+
+    new Vue({
+      el: '#app'
+    })
+  </script>
+</html>
