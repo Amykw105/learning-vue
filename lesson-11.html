@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vue.js Tutorial | API Example</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <!--
+  Using vue components to output content
+  -->
+  <body>
+    <div id="app">
+      <div class="container">
+        <div class="row">
+          <task-list></task-list>
+        </div> <!-- end of .row -->
+      </div> <!-- end of .container -->
+    </div> <!-- end of #app -->
+  </body>
+
+  <script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
+
+  <script>
+  // Create the component which references the component task and uses the data specified
+    Vue.component('task-list', {
+      template: '<div><task v-for="task in tasks">{{task.task}}</task></div>',
+
+      data(){
+        return{
+          tasks: [
+            {task: 'email', complete: true},
+            {task: 'call', complete: false},
+            {task: 'write', complete: true},
+            {task: 'text', complete: false}
+          ]
+        };
+      }
+    });
+
+    Vue.component('task', {
+      template: '<li><slot></slot></li>'
+    });
+
+    new Vue({
+      el: '#app',
+    })
+  </script>
+</html>
