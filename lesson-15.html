@@ -58,28 +58,11 @@
           </footer>
         </div>
       </div>
-      `,
-
-      methods: {
-        // Notify the root onCouponApplied method (this will run the root onCouponApplied function)
-        onCouponApplied(){
-          this.$emit('applied')
-        }
-      }
+      `
     })
 
     new Vue({
       el: '#app',
-
-      data:{
-        couponApplied: false
-      },
-      // This is the root onCouponApplied method
-      methods: {
-        onCouponApplied(){
-          this.couponApplied = true
-        }
-      }
     })
   </script>
 </html>
